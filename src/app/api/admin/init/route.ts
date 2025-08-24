@@ -96,7 +96,7 @@ async function initializeDatabase() {
   }
 }
 
-export async function POST() {
+async function initializeApp() {
   try {
     // First, initialize database if needed
     const dbResult = await initializeDatabase()
@@ -136,4 +136,12 @@ export async function POST() {
       { status: 500 }
     )
   }
+}
+
+export async function GET() {
+  return initializeApp()
+}
+
+export async function POST() {
+  return initializeApp()
 }
