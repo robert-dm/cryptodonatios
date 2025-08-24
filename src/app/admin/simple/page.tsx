@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import Link from 'next/link'
 import { Eye, EyeOff, Copy, RefreshCw } from 'lucide-react'
 
 // Mock admin data for demonstration
@@ -255,12 +256,12 @@ export default function SimpleAdminDashboard() {
         </div>
 
         <div className="mt-4 text-center">
-          <a
+          <Link
             href="/"
             className="text-blue-600 hover:text-blue-800 underline"
           >
             ← Back to Main Application
-          </a>
+          </Link>
         </div>
       </div>
     </div>

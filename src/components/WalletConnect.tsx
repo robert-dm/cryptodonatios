@@ -16,10 +16,10 @@ export default function WalletConnect({ onDonate, walletAddress, blockchain }: W
   const [loading, setLoading] = useState(false)
 
   const connectWallet = async () => {
-    if (typeof window !== 'undefined' && (window as any).ethereum) {
+    if (typeof window !== 'undefined' && window.ethereum) {
       try {
-        const provider = new BrowserProvider((window as any).ethereum)
-        await (window as any).ethereum.request({ method: 'eth_requestAccounts' })
+        const provider = new BrowserProvider(window.ethereum)
+        await window.ethereum.request({ method: 'eth_requestAccounts' })
         const signer = await provider.getSigner()
         const address = await signer.getAddress()
         
@@ -41,7 +41,7 @@ export default function WalletConnect({ onDonate, walletAddress, blockchain }: W
     setLoading(true)
     
     try {
-      const provider = new BrowserProvider((window as any).ethereum)
+      const provider = new BrowserProvider(window.ethereum)
       const signer = await provider.getSigner()
       
       // Convert amount to wei (assuming ETH)

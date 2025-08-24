@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { User, Plus, LogOut, Menu, X, Shield } from 'lucide-react'
 
 interface User {
@@ -12,6 +13,7 @@ interface User {
 }
 
 export default function Navigation() {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -36,7 +38,7 @@ export default function Navigation() {
     try {
       await fetch('/api/auth/logout', { method: 'POST' })
       setUser(null)
-      window.location.href = '/'
+      router.push('/')
     } catch (error) {
       console.error('Logout failed:', error)
     }

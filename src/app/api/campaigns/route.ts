@@ -3,6 +3,11 @@ import { prisma } from '@/lib/prisma'
 import { verifyJWT } from '@/lib/auth'
 import { solanaService } from '@/lib/solana'
 
+interface WalletAddress {
+  address: string
+  blockchain: string
+}
+
 export async function GET() {
   try {
     const campaigns = await prisma.campaign.findMany({
@@ -66,7 +71,7 @@ export async function POST(request: NextRequest) {
           imageUrl,
           userId: user.id,
           walletAddresses: {
-            create: walletAddresses.map((addr: { address: string; blockchain: string }) => ({
+            create: walletAddresses.map((addr: WalletAddress) => ({
               address: addr.address,
               blockchain: addr.blockchain
             }))
