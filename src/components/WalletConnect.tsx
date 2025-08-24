@@ -41,6 +41,11 @@ export default function WalletConnect({ onDonate, walletAddress, blockchain }: W
     setLoading(true)
     
     try {
+      if (!window.ethereum) {
+        alert('Please install MetaMask to use this feature')
+        return
+      }
+      
       const provider = new BrowserProvider(window.ethereum)
       const signer = await provider.getSigner()
       
