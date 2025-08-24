@@ -11,6 +11,15 @@ async function initializeDatabase() {
     // Tables don't exist, create them
     console.log('Initializing database schema...')
     
+    // Create enum types first
+    await prisma.$executeRaw`
+      DO $$ BEGIN
+        CREATE TYPE "CampaignStatus" AS ENUM ('ACTIVE', 'PAUSED', 'COMPLETED', 'CANCELLED');
+      EXCEPTION
+        WHEN duplicate_object THEN null;
+      END $$;
+    `
+    
     await prisma.$executeRaw`
       CREATE TABLE IF NOT EXISTS "users" (
         "id" TEXT NOT NULL,
@@ -37,7 +46,7 @@ async function initializeDatabase() {
         "goalAmount" DOUBLE PRECISION NOT NULL,
         "currentAmount" DOUBLE PRECISION NOT NULL DEFAULT 0,
         "imageUrl" TEXT,
-        "status" TEXT NOT NULL DEFAULT 'ACTIVE',
+        "status" "CampaignStatus" NOT NULL DEFAULT 'ACTIVE',
         "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "userId" TEXT NOT NULL,
